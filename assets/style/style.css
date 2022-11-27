@@ -32,9 +32,52 @@ body.wrong {
 }
 
 .container {
-  width: 800px;
+  width: 700px;
   max-width: 80%;
   background-color: aliceblue;
   border-radius: 5px;
+  padding: 15px;
+}
+
+.btn-grid {
+  display: grid;
+  grid-template-columns: repeat(2, auto);
+  gap: 10px;
+  margin: 20px;
+}
+
+.btn {
+  --hue: var(--hue-neutral);
+  border: solid;
+  background-color: hsl(var(--hue), 75%, 50%);
+  border-radius: 5px;
+  color: aliceblue;
+}
+
+.btn:hover {
+  border-color: brown;
+}
+
+.button-correct {
+  --hue: var(--hue-correct);
+}
+
+.button-wrong {
+  --hue: var(--hue-wrong);
+}
+
+.start-btn,
+.next-btn {
+  font-size: 1.5rem;
   padding: 10px;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.hide {
+  display: none;
 }
