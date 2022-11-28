@@ -14,7 +14,16 @@ console.log(started)
     setNextQuestion()
 }
 
-function setNextQuestion() {}
+function setNextQuestion() {
+showQuestion(shuffledQuestions[currentQuestionIndex])
+
+}
+
+function showQuestion(question) {
+
+    
+
+}
 
 
 function selectAnswer{
