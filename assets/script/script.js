@@ -3,8 +3,11 @@ var questionContainerElement = document.getElementById("question-container");
 var questionElement = document.getElementById("question");
 var answerButtonsElement = document.getElementById("answer-buttons");
 var timer = document.getElementById("timer");
+var nameInput = document.getElementById("name");
+var errorDiv = document.getElementById("error");
 
-var timerValue = 3;
+var timerId;
+var timerValue = 10;
 var questions = [
   {
     question: "Arrays in JavaScript can be used to store what?",
@@ -25,6 +28,12 @@ var questions = [
     ],
   },
 ];
+var userName;
+
+var highscore = localStorage.getItem("highscore");
+if (!highscore) {
+  localStorage.setItem("highscore", JSON.stringify([]));
+}
 
 var shuffledQuestions;
 var currentQuestionIndex = 0;
@@ -33,6 +42,7 @@ startButton.addEventListener("click", startQuiz);
 
 function timerTick() {
   if (timerValue === 0) {
+    clearInterval(timerId);
     gameOver();
 
     return;
@@ -42,17 +52,25 @@ function timerTick() {
 }
 
 function startQuiz() {
-  startButton.classList.add("hide");
-  questionContainerElement.classList.remove("hide");
-  timer.innerHTML = `Time left: ` + timerValue;
+  if (nameInput.value) {
+    startButton.classList.add("hide");
+    errorDiv.classList.add("hide");
+    nameInput.classList.add("hide");
+    questionContainerElement.classList.remove("hide");
+    timer.innerHTML = `Time left: ` + timerValue;
 
-  shuffledQuestions = questions.sort(function () {
-    Math.floor(Math.random() * questions.length);
-  });
+    userName = nameInput.value;
 
-  timerId = setInterval(timerTick, 1000);
+    shuffledQuestions = questions.sort(function () {
+      Math.floor(Math.random() * questions.length);
+    });
 
-  setNextQuestion();
+    timerId = setInterval(timerTick, 1000);
+
+    setNextQuestion();
+  } else {
+    errorDiv.classList.remove("hide");
+  }
 }
 
 function setNextQuestion() {
@@ -92,6 +110,13 @@ function showQuestion(question) {
 
 function gameOver() {
   questionContainerElement.classList.add("hide");
-}
+  var highscoreFromLS = JSON.parse(localStorage.getItem("highscore"));
 
-function selectAnswer() {}
+  var currentUserObject = {
+    name: userName,
+    score: timerValue,
+  };
+
+  highscoreFromLS.push(currentUserObject);
+  localStorage.setItem("highscore", JSON.stringify(highscoreFromLS));
+}
