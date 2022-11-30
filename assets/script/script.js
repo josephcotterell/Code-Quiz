@@ -5,6 +5,8 @@ var answerButtonsElement = document.getElementById("answer-buttons");
 var timer = document.getElementById("timer");
 var nameInput = document.getElementById("name");
 var errorDiv = document.getElementById("error");
+var highscoreContainer = document.getElementById("highscore-container");
+var hsButton = document.getElementById("btn-highscore");
 
 var timerId;
 var timerValue = 10;
@@ -108,6 +110,26 @@ function showQuestion(question) {
   }
 }
 
+function showHighscore() {
+  var highscoreFromLS = JSON.parse(localStorage.getItem("highscore"));
+  for (let index = 0; index < highscoreFromLS.length; index++) {
+    var hsDiv = document.createElement("div");
+    var hsName = document.createElement("div");
+    var hsScore = document.createElement("div");
+
+    hsName.innerHTML = highscoreFromLS[index].name;
+    hsScore.innerHTML = highscoreFromLS[index].score;
+    hsDiv.appendChild(hsName);
+    hsDiv.appendChild(hsScore);
+    highscoreContainer.appendChild(hsDiv);
+  }
+  highscoreContainer.classList.remove("hide");
+  startButton.classList.add("hide");
+  hsButton.classList.add("hide");
+  errorDiv.classList.add("hide");
+  nameInput.classList.add("hide");
+}
+
 function gameOver() {
   questionContainerElement.classList.add("hide");
   var highscoreFromLS = JSON.parse(localStorage.getItem("highscore"));
@@ -119,4 +141,7 @@ function gameOver() {
 
   highscoreFromLS.push(currentUserObject);
   localStorage.setItem("highscore", JSON.stringify(highscoreFromLS));
+  showHighscore();
 }
+
+hsButton.addEventListener("click", showHighscore);
