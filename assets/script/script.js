@@ -75,6 +75,8 @@ function showQuestion(question) {
       var isAnswerCorrect = event.target.getAttribute("data-correct");
       if (isAnswerCorrect === "true") {
         setNextQuestion();
+      } else {
+        timerValue -= 5;
       }
     });
   }
