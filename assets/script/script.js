@@ -31,7 +31,7 @@ var questions = [
   },
 ];
 var userName;
-
+//highscore variable
 var highscore = localStorage.getItem("highscore");
 if (!highscore) {
   localStorage.setItem("highscore", JSON.stringify([]));
@@ -42,6 +42,7 @@ var currentQuestionIndex = 0;
 
 startButton.addEventListener("click", startQuiz);
 
+//timer function
 function timerTick() {
   if (timerValue === 0) {
     clearInterval(timerId);
@@ -53,6 +54,7 @@ function timerTick() {
   timer.innerHTML = `Time left: ` + timerValue;
 }
 
+//start quiz function
 function startQuiz() {
   if (nameInput.value) {
     startButton.classList.add("hide");
@@ -74,7 +76,7 @@ function startQuiz() {
     errorDiv.classList.remove("hide");
   }
 }
-
+//set next question function
 function setNextQuestion() {
   if (currentQuestionIndex < questions.length) {
     answerButtonsElement.innerHTML = "";
@@ -109,7 +111,7 @@ function showQuestion(question) {
     });
   }
 }
-
+//show high score function
 function showHighscore() {
   var highscoreFromLS = JSON.parse(localStorage.getItem("highscore"));
   for (let index = 0; index < highscoreFromLS.length; index++) {
@@ -129,7 +131,7 @@ function showHighscore() {
   errorDiv.classList.add("hide");
   nameInput.classList.add("hide");
 }
-
+//game over function
 function gameOver() {
   questionContainerElement.classList.add("hide");
   var highscoreFromLS = JSON.parse(localStorage.getItem("highscore"));
